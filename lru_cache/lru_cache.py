@@ -1,6 +1,6 @@
 import sys
-sys.path.append('../dll_queue')
-from dll_queue import Queue
+sys.path.append('../doubly_linked_list')
+from doubly_linked_list import DoublyLinkedList
 
 class LRUCache:
     """
@@ -13,8 +13,8 @@ class LRUCache:
     def __init__(self, limit=10):
         self.limit = limit
         self.cache = {}
-        self.storage = Queue()
-        current = self.storage.len()
+        self.storage = DoublyLinkedList()
+        self.size = 0
 
 
     """
@@ -26,9 +26,11 @@ class LRUCache:
     """
     def get(self, key):
         if key in self.cache:
-            self.storage.move_to_end(self.storage.get_node(key))
-            return self.cache.get(key, None)
-        print("self.cache :", self.cache)
+            node = self.cache[key]
+            self.storage.move_to_end(node)
+            return node.value[1]
+        else:
+            return None
 
 
     """
@@ -42,16 +44,20 @@ class LRUCache:
     the newly-specified value.
     """
     def set(self, key, value):
-        pass
+        if key in self.cache:
+            node = self.cache[key]
+            node.value = (key, value)
+            self.storage.move_to_end(node)
+            return
 
+        if self.size == self.limit:
+            del self.cache[self.storage.head.value[0]]
+            self.storage.remove_from_head()
+            self.size -= 1
+        # Add a key, value to the cache
+        # Add it to the tail of the LL
+        self.storage.add_to_tail((key, value))
+        # Add to dict
+        self.cache[key] = self.storage.tail
+        self.size += 1
 
-q = Queue()
-q.enqueue(7)
-q.enqueue(17)
-
-p = LRUCache()
-p.storage.enqueue(4)
-p.storage.enqueue(14)
-p.storage.enqueue(8)
-
-print(p.storage.len())
