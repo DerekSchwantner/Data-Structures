@@ -1,3 +1,7 @@
+import sys
+sys.path.append('../dll_queue')
+from dll_queue import Queue
+
 class LRUCache:
     """
     Our LRUCache class keeps track of the max number of nodes it
@@ -7,7 +11,11 @@ class LRUCache:
     to every node stored in the cache.
     """
     def __init__(self, limit=10):
-        pass
+        self.limit = limit
+        self.cache = {}
+        self.storage = Queue()
+        current = self.storage.len()
+
 
     """
     Retrieves the value associated with the given key. Also
@@ -17,7 +25,11 @@ class LRUCache:
     key-value pair doesn't exist in the cache.
     """
     def get(self, key):
-        pass
+        if key in self.cache:
+            self.storage.move_to_end(self.storage.get_node(key))
+            return self.cache.get(key, None)
+        print("self.cache :", self.cache)
+
 
     """
     Adds the given key-value pair to the cache. The newly-
@@ -31,3 +43,15 @@ class LRUCache:
     """
     def set(self, key, value):
         pass
+
+
+q = Queue()
+q.enqueue(7)
+q.enqueue(17)
+
+p = LRUCache()
+p.storage.enqueue(4)
+p.storage.enqueue(14)
+p.storage.enqueue(8)
+
+print(p.storage.len())
