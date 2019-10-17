@@ -34,6 +34,13 @@ class ListNode:
         if self.next:
             self.next.prev = self.prev
 
+    """Returns boolean indicating if there is a next node"""
+    def has_next(self):
+        if self.next is None:
+            return False
+        return True
+
+
 
 """Our doubly-linked list class. It holds references to
 the list's head and tail nodes."""
@@ -144,3 +151,44 @@ class DoublyLinkedList:
                 max_val = current.value
             current = current.next
         return max_val
+
+    """Reverses the order of the list"""
+    def reverse(self):
+        if self.head is None:
+            print("no items to delete")
+        p = self.head
+        q = p.next
+        p.next = None
+        p.prev = q
+        while q is not None:
+            q.prev = q.next
+            q.next = p
+            p = q
+            q = q.prev
+        self.head = p
+
+    """Reverses the orfer of the list"""
+
+    def print_list(self):
+        print("list below...")
+        if self.head is None:
+            return
+        this_node = self.head
+        print(this_node.value)
+        while this_node.has_next():
+            print(f"hasnext: {this_node.has_next()}")
+            this_node = this_node.next
+            if this_node.has_next() == True:
+                print(this_node.value)
+
+
+dl = DoublyLinkedList()
+dl.add_to_head(12)
+dl.add_to_head(2)
+dl.add_to_head(4)
+dl.add_to_tail(56)
+
+print(dl.print_list())
+dl.reverse()
+print(dl.print_list())
+# print(dl.tail.value)

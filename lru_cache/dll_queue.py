@@ -14,7 +14,6 @@ class Queue:
         self.size += 1
 
     def dequeue(self):
-        # pass
         if self.size == 0:
             return None
         else:
@@ -26,9 +25,4 @@ class Queue:
     def len(self):
         return self.size
 
-q = Queue()
 
-q.enqueue(7)
-q.enqueue(12)
-
-print(q.storage.head.value)
