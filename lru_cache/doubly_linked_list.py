@@ -167,7 +167,7 @@ class DoublyLinkedList:
             q = q.prev
         self.head = p
 
-    """Reverses the orfer of the list"""
+    """prints the list"""
 
     def print_list(self):
         print("list below...")
